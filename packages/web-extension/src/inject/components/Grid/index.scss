@@ -22,7 +22,7 @@ $unused-col-color: rgba(162, 25, 31, 0.4);
 // Level 1
 .msk-devtool-grid-container {
   position: fixed;
-  z-index: 3;
+  z-index: 9999;
   top: 0;
   right: 0;
   bottom: 0;
