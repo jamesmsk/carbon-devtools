@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import settings from 'carbon-components/es/globals/js/settings';
-import Accordion, {
-  AccordionItem,
-} from 'carbon-components-react/es/components/Accordion';
-import { Footer, General, Grid, Shortcuts, Reset } from './components';
+import { Footer, General } from './components';
 import { storageChanged } from '@carbon/devtools-utilities/src/storageChanged';
 import { getStorage } from '@carbon/devtools-utilities/src/getStorage';
-import {
-  gaPageview,
-  gaNavigationEvent,
-} from '@carbon/devtools-utilities/src/ga';
+import { gaPageview } from '@carbon/devtools-utilities/src/ga';
 
 import './index.scss';
 
@@ -42,44 +36,7 @@ function Options() {
       <div className={`${prefix}--row`}>
         <div className={`${prefix}--col`}>
           <h1 className={`${prefix}--options__title`}>Settings</h1>
-          <Accordion>
-            <AccordionItem
-              title="General"
-              onHeadingClick={() =>
-                gaNavigationEvent('toggle', 'general-settings')
-              }
-              open={false}
-            >
-              <General {...data} />
-            </AccordionItem>
-            <AccordionItem
-              title="Grid"
-              onHeadingClick={() =>
-                gaNavigationEvent('toggle', 'grid-settings')
-              }
-              open={false}
-            >
-              <Grid {...data} />
-            </AccordionItem>
-            <AccordionItem
-              title="Shortcuts"
-              onHeadingClick={() =>
-                gaNavigationEvent('toggle', 'shortcut-settings')
-              }
-              open={false}
-            >
-              <Shortcuts {...data} />
-            </AccordionItem>
-            <AccordionItem
-              title="Reset"
-              onHeadingClick={() =>
-                gaNavigationEvent('toggle', 'reset-settings')
-              }
-              open={false}
-            >
-              <Reset {...data} />
-            </AccordionItem>
-          </Accordion>
+          <General {...data} />
         </div>
       </div>
       <Footer />

@@ -1,9 +1,5 @@
-import settings from 'carbon-components/es/globals/js/settings';
 import { getStorage } from '@carbon/devtools-utilities/src/getStorage';
 import { storageItemChanged } from '@carbon/devtools-utilities/src/storageItemChanged';
-import { positions } from '../../../../globals/options';
-
-const { prefix } = settings;
 
 function manage2xGrid() {
   getStorage('toggle2xGridOptions', ({ toggle2xGridOptions }) =>
@@ -12,68 +8,117 @@ function manage2xGrid() {
   storageItemChanged('toggle2xGridOptions', manage2xGridOptions); // update ui if options change
 }
 
-function manage2xGridOptions({
-  toggle2xColumns,
-  toggle2xGutters,
-  toggle2xBorders,
-  toggle2xPosition,
-  toggle2xLeftInfluencer,
-  toggle2xRightInfluencer,
-}) {
+function manage2xGridOptions({ layout }) {
   const html = document.querySelector('html');
-  const grid2x = html.querySelector(`.${prefix}--grid-2x`);
-  const gridRow = grid2x.querySelector(`.${prefix}--row`);
+  const outerContainer = html.querySelector(`.msk-devtool-grid-container`);
+  const innerContainer = outerContainer.querySelector(
+    `.msk-devtool-inner-container`
+  );
 
-  // set grid influencers
-  gridRow.style.paddingLeft = `${toggle2xLeftInfluencer || 0}px`;
-  gridRow.style.paddingRight = `${toggle2xRightInfluencer || 0}px`;
+  const mainContainer = innerContainer.querySelector(
+    '.msk-devtool-grid-overlay-content'
+  );
 
-  // hide or show columns
-  if (toggle2xColumns) {
-    grid2x.classList.add(`${prefix}--grid-2x--inner`);
-  } else {
-    grid2x.classList.remove(`${prefix}--grid-2x--inner`);
+  const asideContainer = innerContainer.querySelector('.msk-devtool-aside');
+
+  const innerMostContainer = mainContainer.querySelector(
+    '.msk-devtool-grid-overlay-columns'
+  );
+
+  const touchCol = (num) => {
+    return innerMostContainer.querySelector(
+      `.msk-devtool-grid-overlay-col:${num}`
+    );
+  };
+
+  let numOfColumns;
+  const columns = [];
+
+  switch (layout) {
+    case 'bullseye':
+      numOfColumns = 9;
+      break;
+    default:
+      numOfColumns = 12;
+      break;
   }
 
-  // hide or show gutters
-  if (toggle2xGutters) {
-    grid2x.classList.add(`${prefix}--grid-2x--outer`);
-  } else {
-    grid2x.classList.remove(`${prefix}--grid-2x--outer`);
+  for (let i = 0; i < numOfColumns; i++) {
+    columns.push(`<div class="msk-devtool-grid-overlay-col"></div>`);
   }
 
-  // hide or show borders/dividers
-  if (toggle2xBorders) {
-    grid2x.classList.add(
-      `${prefix}--grid-2x--inner-border`,
-      `${prefix}--grid-2x--outer-border`
-    );
-  } else {
-    grid2x.classList.remove(
-      `${prefix}--grid-2x--inner-border`,
-      `${prefix}--grid-2x--outer-border`
-    );
+  innerMostContainer.innerHTML = columns.join('');
+
+  function resetCol() {
+    innerContainer.classList.remove('msk-layout-bullseye-container');
+    mainContainer.classList.remove('msk-layout-bullseye-devtool-slot-main');
+    asideContainer.classList.add('msk-devtool-hide');
+    for (let i = 1; i <= 12; i++) {
+      touchCol(`nth-child(${i})`).classList.remove('unused-col');
+      touchCol(`nth-child(${i})`).classList.remove('aside-col');
+    }
   }
 
-  // toggle between different position options
-  if (toggle2xPosition) {
-    const grid = resetPosition(grid2x);
-    grid.classList.add(
-      `${prefix}--grid--${toggle2xPosition.toLowerCase().replace(/ /g, '-')}`
-    );
+  function fullWidth() {
+    innerContainer.classList.remove('msk-devtool-compact');
+    innerContainer.classList.add('msk-devtool-full');
   }
-}
 
-function resetPosition(grid2x) {
-  const grid = grid2x.querySelector(`.${prefix}--grid`);
+  function compactWidth() {
+    innerContainer.classList.remove('msk-devtool-full');
+    innerContainer.classList.add('msk-devtool-compact');
+  }
 
-  Object.keys(positions).forEach((position) => {
-    grid.classList.remove(
-      `${prefix}--grid--${position.toLowerCase().replace(/ /g, '-')}`
-    );
+  function bullseyeDisplay() {
+    asideContainer.classList.remove('msk-devtool-hide');
+    innerContainer.classList.remove('msk-devtool-full');
+    innerContainer.classList.remove('msk-devtool-compact');
+    innerContainer.classList.add('msk-layout-bullseye-container');
+    mainContainer.classList.add('msk-layout-bullseye-devtool-slot-main');
+
+    for (let i = 1; i <= 12; i++) {
+      touchCol(`nth-child(${i})`).classList.remove('unused-col');
+      touchCol(`nth-child(${i})`).classList.remove('aside-col');
+    }
+  }
+
+  const allLayouts = [
+    'bookworm',
+    'sarge',
+    'potato',
+    'bullseye',
+    'slink',
+    'buster',
+  ];
+
+  allLayouts.forEach((item) => {
+    if (layout === item) {
+      mainContainer.classList.add(`msk-devtool-${item}`);
+    } else {
+      mainContainer.classList.remove(`msk-devtool-${item}`);
+    }
   });
 
-  return grid;
+  switch (layout) {
+    case 'sarge':
+    case 'potato':
+    case 'buster':
+      resetCol();
+      compactWidth();
+      break;
+    case 'bookworm':
+    case 'slink':
+      resetCol();
+      fullWidth();
+      break;
+    case 'bullseye':
+      bullseyeDisplay();
+      break;
+    default:
+      resetCol();
+      compactWidth();
+      break;
+  }
 }
 
 export { manage2xGrid };

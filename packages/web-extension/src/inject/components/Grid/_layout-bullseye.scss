@@ -1,0 +1,55 @@
+@import '@mskcc/fundamentals/src/_variables.scss';
+@import '@mskcc/fundamentals/src/_mixins.scss';
+@import '@mskcc/fundamentals/src/_colors.scss';
+
+@import 'breakpoint-sass/stylesheets/_breakpoint';
+@import 'breakpoint-slicer/stylesheets/_breakpoint-slicer';
+
+.msk-layout-bullseye-devtool {
+  width: 100%;
+}
+
+.msk-layout-bullseye-devtool-container {
+  @include msk-container-with-padding;
+
+  @include from(8) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+}
+
+.msk-layout-bullseye-devtool-slot-left,
+.msk-layout-bullseye-devtool-slot-main {
+  @include from(8) {
+    flex: 0 1 auto;
+  }
+}
+
+.msk-layout-bullseye-devtool-slot-left {
+  @include from(8) {
+    width: $msk--7-of-24;
+    padding-right: $msk--1-of-24;
+  }
+  @include from(11) {
+    width: $msk--3-of-12;
+  }
+}
+
+.msk-layout-bullseye-devtool-slot-main {
+  @include from(8) {
+    width: $msk--17-of-24;
+  }
+  @include from(11) {
+    width: $msk--9-of-12;
+  }
+}
+
+.msk-layout-bullseye-devtool-slot-container,
+.msk-layout-bullseye-devtool-slot-content {
+  height: 100%;
+}
+
+.msk-layout-search-slot-container {
+  padding: 0 0.5rem;
+}

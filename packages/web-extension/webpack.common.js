@@ -140,10 +140,10 @@ module.exports = {
       react: 'preact/compat',
       'react-dom': 'preact/compat',
       '@carbon/devtools-utilities': path.resolve(__dirname, '../utilities'),
-      '@carbon/devtools-component-list': path.resolve(
-        __dirname,
-        '../component-list'
-      ),
+      // '@carbon/devtools-component-list': path.resolve(
+      //   __dirname,
+      //   '../component-list'
+      // ),
     },
   },
 };
@@ -151,7 +151,7 @@ module.exports = {
 function syncManifestPackage(content) {
   const manifest = JSON.parse(content);
 
-  manifest.name = formatName(packageJSON.name);
+  manifest.name = 'MSK Devtools';
   manifest.version = packageJSON.version;
   manifest.description = packageJSON.description;
   manifest.author = packageJSON.author;
@@ -159,15 +159,15 @@ function syncManifestPackage(content) {
   return JSON.stringify(manifest);
 }
 
-function formatName(name) {
-  let cleanName = '';
+// function formatName(name) {
+//   let cleanName = '';
 
-  name
-    .split('-')
-    .forEach(
-      (name) =>
-        (cleanName += name.charAt(0).toUpperCase() + name.slice(1) + ' ')
-    );
+//   name
+//     .split('-')
+//     .forEach(
+//       (name) =>
+//         (cleanName += name.charAt(0).toUpperCase() + name.slice(1) + ' ')
+//     );
 
-  return cleanName.trim();
-}
+//   return cleanName.trim();
+// }

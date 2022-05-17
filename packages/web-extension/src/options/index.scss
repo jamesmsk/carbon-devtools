@@ -7,9 +7,9 @@ $feature-flags: (
 @import '@carbon/grid/scss/prefix';
 @import '@carbon/layout/scss/breakpoint';
 @import '@carbon/layout/scss/spacing';
-@import '@carbon/type/scss/font-family';
+// @import '@carbon/type/scss/font-family';
 @import '@carbon/type/scss/styles';
-@import '@carbon/type/scss/font-face/sans';
+// @import '@carbon/type/scss/font-face/sans';
 @import '@carbon/grid/scss/grid';
 @import '@carbon/themes/scss/themes';
 @import '~carbon-components/scss/components/form/form';
@@ -20,7 +20,7 @@ $feature-flags: (
 
 $carbon--theme: $carbon--theme--white;
 
-@include carbon--font-face-sans;
+// @include carbon--font-face-sans;
 @include carbon--theme;
 
 @import './components/Footer';

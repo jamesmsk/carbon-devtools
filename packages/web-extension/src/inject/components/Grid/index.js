@@ -22,34 +22,39 @@ let lastGridVersion = '';
 function initGrid() {
   const body = html.querySelector('body');
   const devtoolContainerClass = `${prefix}--devtools`;
-  const numOfColumns = 16;
-  const columns = [];
 
   let gridContainer = body.querySelector(`.${devtoolContainerClass}`);
 
   html.classList.add(`${prefix}--grid--hide`);
 
-  for (let i = 0; i < numOfColumns; i++) {
-    columns.push(
-      `<div class="${prefix}--col-sm-1 ${prefix}--col-md-1 ${prefix}--col-lg-1"></div>`
-    );
-  }
-
   const GRID_HTML = `
-        <div class="${prefix}--grid-2x">
-            <div class="${prefix}--grid">
-                <div class="${prefix}--row">
-                    ${columns.join('')}
-                </div>
-            </div>
+  <div class="msk-devtool-grid-container">
+  <div class="msk-devtool-compact msk-devtool-inner-container">
+    <aside class="msk-devtool-aside msk-layout-bullseye-devtool-slot msk-layout-bullseye-devtool-slot-left">
+      <div class="msk-layout-bullseye-devtool-slot-container">
+        <div class="msk-layout-bullseye-devtool-slot-content">
+          <div class="msk-devtool-aside-columns">
+            <div class="msk-devtool-grid-overlay-col aside-col"></div>
+            <div class="msk-devtool-grid-overlay-col aside-col"></div>
+          </div>
         </div>
-        <div class="${prefix}--grid-mini-unit"></div>`;
+      </div>
+    </aside>
+
+    <main class="msk-devtool-grid-overlay-content">
+      <div class="msk-devtool-grid-overlay-columns">
+
+      </div>
+    </main>
+  </div>
+  `;
+  // ${columns.join('')}
 
   if (!gridContainer) {
     gridContainer = document.createElement('div');
     gridContainer.classList.add(devtoolContainerClass);
     gridContainer.innerHTML = GRID_HTML;
-    body.appendChild(gridContainer);
+    html.appendChild(gridContainer);
   }
 
   // updates if storage changes

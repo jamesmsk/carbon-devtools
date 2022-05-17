@@ -10,6 +10,14 @@ $grid-outer-border-size: $grid-border-size;
 $grid-outer-border-color: $grid-border-color;
 $grid-outer-border-opacity: $grid-border-opacity;
 
+.bx-dev--grid--hide {
+  .msk-devtool-grid-container {
+    top: auto;
+    bottom: 0;
+    height: 0;
+  }
+}
+
 // 2x grid
 .#{$prefix}--grid {
   &.#{$prefix}--grid--left {

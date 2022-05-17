@@ -4,37 +4,26 @@ import settings from 'carbon-components/es/globals/js/settings';
 import Accordion, {
   AccordionItem,
 } from 'carbon-components-react/es/components/Accordion';
-import { InlineNotification } from 'carbon-components-react/es/components/Notification';
-import Link from 'carbon-components-react/es/components/Link';
 import Toggle from 'carbon-components-react/es/components/Toggle';
 import { setStorage } from '@carbon/devtools-utilities/src/setStorage';
 import { getStorage } from '@carbon/devtools-utilities/src/getStorage';
 import { experimentalFlag } from '@carbon/devtools-utilities/src/experimental';
-import { openChromeExtensionOptions } from '@carbon/devtools-utilities/src/openChromeExtensionOptions';
 import {
   gaNavigationEvent,
   gaConfigurationEvent,
 } from '@carbon/devtools-utilities/src/ga';
 import { defaults } from '../../../globals/defaults';
-import { Inventory, Specs, Grid, ResizeBrowser, PageInfo } from '../';
-// import * as Panels from '../';
+import { Grid, PageInfo } from '../';
 
 const { prefix } = settings;
 
 function Main({ initialMsg, _inventoryData, _panelControls }) {
   const [globalToggleStates, setGlobalToggleStates] = useState(defaults.global);
   const [isOpenStates, setIsOpenStates] = useState(defaults.global);
-  const [nonCarbon, setNonCarbon] = useState({});
   const [onLoad, setOnLoad] = useState(false);
 
   const groups = {};
 
-  // experimentalFlag(() => {
-  //     groups['Page info'] = ComingSoon;
-  // });
-
-  groups['Component list'] = Inventory;
-  groups['Specs'] = Specs;
   groups['Grid overlay'] = Grid;
 
   const groupsList = Object.keys(groups);
@@ -48,13 +37,6 @@ function Main({ initialMsg, _inventoryData, _panelControls }) {
         if (dataReceived) {
           if (dataReceived[dataKey]) {
             setGlobalToggleStates(dataReceived[dataKey]);
-          }
-
-          if (dataReceived['generalNonCarbon']) {
-            setNonCarbon({
-              option: dataReceived['generalNonCarbon'],
-              dateClosed: dataReceived['generalNonCarbonClear'],
-            });
           }
         }
 
@@ -81,74 +63,28 @@ function Main({ initialMsg, _inventoryData, _panelControls }) {
   });
 
   return (
-    <>
-      {nonCarbonReminder(nonCarbon)}
-      <ResizeBrowser windowWidth={initialMsg.windowWidth} />
-      <Accordion className={`${prefix}--popup-main`}>
-        {experimentalFlag(() => (
-          <AccordionItem
-            title={'Page info'}
-            className={`${prefix}--popup-main__item ${prefix}--popup-main__panel`}
-            onHeadingClick={() =>
-              _panelControls.open(
-                'Page info',
-                <PageInfo
-                  initialMsg={initialMsg}
-                  _inventoryData={_inventoryData}
-                  _panelControls={_panelControls}
-                />
-              )
-            }
-          />
-        ))}
-        {groupsList.map((groupName) =>
-          renderAccordionItem(groupName, groups[groupName])
-        )}
-      </Accordion>
-    </>
+    <Accordion className={`${prefix}--popup-main`}>
+      {experimentalFlag(() => (
+        <AccordionItem
+          title={'Page info'}
+          className={`${prefix}--popup-main__item ${prefix}--popup-main__panel`}
+          onHeadingClick={() =>
+            _panelControls.open(
+              'Page info',
+              <PageInfo
+                initialMsg={initialMsg}
+                _inventoryData={_inventoryData}
+                _panelControls={_panelControls}
+              />
+            )
+          }
+        />
+      ))}
+      {groupsList.map((groupName) =>
+        renderAccordionItem(groupName, groups[groupName])
+      )}
+    </Accordion>
   );
-
-  function nonCarbonReminder({ option, dateClosed }) {
-    const threshold = 1000 * 60 * 60 * 6; // 6 hours
-
-    if (
-      !option ||
-      (dateClosed && dateClosed + threshold > new Date().valueOf())
-    ) {
-      return null;
-    }
-
-    const msg = {
-      kind: 'info',
-      title: 'Carbon validation OFF',
-      subtitle: (
-        <>
-          Update your{' '}
-          <Link href="#" onClick={openChromeExtensionOptions}>
-            settings
-          </Link>{' '}
-          for the full experience.
-        </>
-      ),
-      onClose: () => {
-        setStorage({ generalNonCarbonClear: new Date().valueOf() });
-      },
-    };
-
-    return (
-      <InlineNotification
-        {...msg}
-        className={`${prefix}--popup-main__notification`}
-        style={{
-          maxWidth: 'initial',
-          width: 'initial',
-          marginRight: '-16px',
-          marginLeft: '-16px',
-          marginTop: '0',
-        }}
-      />
-    );
-  }
 
   function stopBubble(e) {
     e.stopPropagation();

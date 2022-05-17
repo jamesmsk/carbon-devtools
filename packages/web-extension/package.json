@@ -1,8 +1,8 @@
 {
-  "name": "carbon-devtools",
-  "version": "2.7.7",
+  "name": "msk-devtools",
+  "version": "0.1.0",
   "private": true,
-  "description": "A basic set of tools for teams building live Carbon pages.",
+  "description": "A basic set of tools for teams building live MSK pages.",
   "main": "dist/manifest.json",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
@@ -35,10 +35,12 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "@carbon/icons-react": "^10.37.0",
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
+    "@carbon/icons-react": "^10.37.0",
+    "@mskcc/components": "^1.0.0",
+    "@mskcc/fundamentals": "^1.0.0",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^6.2.1",
@@ -78,10 +80,7 @@
   },
   "sideEffects": false,
   "keywords": [
-    "IBM",
-    "Dotcom",
-    "IBM.com",
-    "Carbon",
+    "MSK",
     "Tools",
     "Development"
   ],
@@ -89,13 +88,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/carbon-design-system/devtools"
+    "url": "https://github.mskcc.org/digital-transformers/design-system"
   },
   "bugs": {
-    "url": "https://github.com/carbon-design-system/devtools/issues/new",
-    "email": "james.dow@us.ibm.com"
+    "url": "https://github.mskcc.org/digital-transformers/design-system/issues"
   },
-  "homepage": "https://github.com/carbon-design-system/devtools#readme",
+  "homepage": "https://product.design.dev.aws.mskcc.org/",
   "eslintConfig": {
     "extends": [
       "carbon"

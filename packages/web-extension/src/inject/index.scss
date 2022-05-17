@@ -1,5 +1,3 @@
-/* stylelint-disable no-invalid-position-at-import-rule */
-
 $prefix: 'bx-dev';
 $carbonPrefix: 'bx';
 $zindex: 9999999999;
@@ -12,7 +10,7 @@ $feature-flags: (
 // are all these imports still being used?
 @import '@carbon/type/scss/type';
 @import '@carbon/type/scss/styles';
-@import '@carbon/type/scss/font-face/mono';
+// @import '@carbon/type/scss/font-face/mono';
 @import '@carbon/grid/scss/prefix';
 @import '@carbon/layout/scss/breakpoint';
 @import '@carbon/layout/scss/mini-unit';
@@ -22,8 +20,8 @@ $feature-flags: (
 @import '@carbon/motion/scss/motion';
 @import 'carbon-components/src/globals/scss/motion';
 
-@include carbon--type-reset();
-@include carbon--font-face-mono();
+// @include carbon--type-reset();
+// @include carbon--font-face-mono();
 
 $transition-in: $duration--moderate-02 carbon--motion(standard, productive);
 $transition-fade: $duration--fast-02 carbon--motion(standard, productive);
@@ -42,30 +40,30 @@ $themes: (
 @import 'components';
 
 .#{$prefix}--grid--carbon-v9 {
-  @import '@carbon/grid/scss/12';
+  // @import '@carbon/grid/scss/12';
 }
 
 .#{$prefix}--devtools {
-  @include carbon--theme(
-    $theme: $carbon--theme--g90,
-    $emit-custom-properties: true
-  );
+  // @include carbon--theme(
+  //   $theme: $carbon--theme--g90,
+  //   $emit-custom-properties: true
+  // );
 
   @media (prefers-color-scheme: light) {
     .#{$prefix}--system & {
-      @include carbon--theme(
-        $theme: $carbon--theme--g10,
-        $emit-custom-properties: true
-      );
+      // @include carbon--theme(
+      //   $theme: $carbon--theme--g10,
+      //   $emit-custom-properties: true
+      // );
     }
   }
 
   @each $theme in map-keys($themes) {
     .#{$prefix}--#{$theme} & {
-      @include carbon--theme(
-        map-get($themes, $theme),
-        $emit-custom-properties: true
-      );
+      // @include carbon--theme(
+      //   map-get($themes, $theme),
+      //   $emit-custom-properties: true
+      // );
     }
   }
 }

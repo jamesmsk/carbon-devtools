@@ -19,11 +19,7 @@ defaults.grid = {
 };
 
 defaults.toggle2x = {
-  toggle2xColumns: true,
-  toggle2xBreakpoints: true,
-  toggle2xPosition: 'Center',
-  toggle2xLeftInfluencer: 0,
-  toggle2xRightLeftInfluencer: 0,
+  layout: 'sarge',
 };
 
 defaults.miniUnit = {
@@ -39,9 +35,9 @@ defaults.specs = {
 defaults.gridVersion = Object.keys(gridVersions)[0];
 
 defaults.generalSettings = {
+  nonCarbon: true,
   theme: 'g90',
   experimental: false,
-  nonCarbon: false,
 };
 
 defaults.ga = {

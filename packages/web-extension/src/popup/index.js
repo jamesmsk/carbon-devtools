@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import settings from 'carbon-components/es/globals/js/settings';
-import Tag from 'carbon-components-react/es/components/Tag';
 import Button from 'carbon-components-react/es/components/Button';
 import ChevronLeft from '@carbon/icons/svg/32/chevron--left.svg';
 import { getMessage } from '@carbon/devtools-utilities/src/getMessage';
@@ -12,7 +11,6 @@ import {
 } from '@carbon/devtools-utilities/src/sendMessage';
 import { getStorage } from '@carbon/devtools-utilities/src/getStorage';
 import { experimentalFlag } from '@carbon/devtools-utilities/src/experimental';
-import { formInventoryData } from '@carbon/devtools-utilities/src/formInventoryData';
 import {
   gaPageview,
   gaDomEvent,
@@ -21,7 +19,7 @@ import {
   setIBMer,
 } from '@carbon/devtools-utilities/src/ga';
 import { defaults } from '../globals/defaults';
-import { Loading, Empty, Main, MoreOptions } from './components';
+import { Main, MoreOptions } from './components';
 
 import './index.scss';
 
@@ -35,15 +33,8 @@ function Popup() {
   const [onCarbon, setOnCarbon] = useState(carbonStatus); // eslint-disable-line no-unused-vars
   const [initialMsg, setInitialMsg] = useState();
   const [panelState, setPanelState] = useState(defaults.popup.panelState);
-  const [inventoryData, setInventoryData] = useState(undefined);
 
-  useEffect(() => {
-    getMessage((msg) => {
-      setInventoryData(formInventoryData(msg.inventoryData));
-    });
-  });
-
-  let Content = Loading,
+  let Content = Main,
     panelControls = {
       open: (name, children) => {
         setPanelState({
@@ -90,7 +81,6 @@ function Popup() {
       } else {
         setIBMer(3); // unknown, but probably not
       }
-
       if (msg.runningCarbon) {
         carbonStatus = true;
         setOnCarbon(true);
@@ -99,7 +89,7 @@ function Popup() {
         carbonStatus !== true &&
         Boolean(msg.runningCarbon) === false
       ) {
-        // undefined || false
+        undefined || false;
         carbonStatus = false;
         setOnCarbon(false);
       }
@@ -108,11 +98,7 @@ function Popup() {
     });
   }, []);
 
-  if (carbonStatus === true) {
-    Content = Main;
-  } else if (carbonStatus === false) {
-    Content = Empty;
-  }
+  Content = Main;
 
   return (
     <article
@@ -122,17 +108,7 @@ function Popup() {
     >
       <header className={`${prefix}--popup__header`}>
         <div className={`${prefix}--col-sm-3`}>
-          <h1 className={`${prefix}--popup__heading`}>
-            Carbon Devtools
-            {experimentalFlag(() => (
-              <Tag
-                type="magenta"
-                className={`${prefix}--popup__experimental-tag`}
-              >
-                Exp
-              </Tag>
-            ))}
-          </h1>
+          <h1 className={`${prefix}--popup__heading`}>MSK Devtools</h1>
         </div>
         <div className={`${prefix}--col-sm-1`}>
           <MoreOptions />
@@ -146,7 +122,7 @@ function Popup() {
         <main className={`${prefix}--grid ${prefix}--popup__panel`}>
           <Content
             initialMsg={initialMsg}
-            _inventoryData={inventoryData}
+            // _inventoryData={inventoryData}
             _panelControls={panelControls}
           />
         </main>

@@ -7,8 +7,7 @@
   "permissions": [
     "activeTab",
     "storage",
-    "https://*.mybluemix.net/*",
-    "https://*.carbondesignsystem.com/*"
+    "https://product.design.dev.aws.mskcc.org/"
   ],
   "background": {
     "scripts": ["/background/index.js"],
@@ -16,11 +15,11 @@
   },
   "web_accessible_resources": ["/inject/index.css"],
   "icons": {
-    "16": "/media/16x16-mid.png",
-    "32": "/media/32x32-mid.png",
-    "48": "/media/48x48-mid.png",
-    "64": "/media/64x64-mid.png",
-    "128": "/media/128x128-mid.png"
+    "16": "/media/msk-16x16.png",
+    "32": "/media/msk-32x32.png",
+    "48": "/media/msk-48x48.png",
+    "64": "/media/msk-64x64.png",
+    "128": "/media/msk-128x128.png"
   },
   "browser_action": {
     "default_popup": "/popup/index.html"

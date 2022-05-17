@@ -62,9 +62,9 @@ function manageIcon() {
 
 function setIcon(darkTheme) {
   if (darkTheme) {
-    chrome.browserAction.setIcon({ path: '/media/16x16-dark.png' });
+    chrome.browserAction.setIcon({ path: '/media/msk-16x16.png' });
   } else {
-    chrome.browserAction.setIcon({ path: '/media/16x16-light.png' });
+    chrome.browserAction.setIcon({ path: '/media/msk-16x16.png' });
   }
 
   updateBadgeByRules();
