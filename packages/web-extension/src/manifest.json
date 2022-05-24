@@ -1,22 +1,19 @@
 {
   "name": "{package_name}",
   "version": "{package_version}",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "description": "{package_description}",
   "author": "{package_author}",
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "<all_urls>"
   ],
   "background": {
-    "service_worker": "/background/index.js"
+    "scripts": ["/background/index.js"],
+    "persistent": false
   },
-  "web_accessible_resources": [
-    {
-      "resources": [ "/inject/index.css" ],
-      "matches": ["<all_urls>"]
-    }
-  ],
+  "web_accessible_resources": ["/inject/index.css"],
   "icons": {
     "16": "/media/msk-16x16.png",
     "32": "/media/msk-32x32.png",
@@ -24,7 +21,7 @@
     "64": "/media/msk-64x64.png",
     "128": "/media/msk-128x128.png"
   },
-  "action": {
+  "browser_action": {
     "default_popup": "/popup/index.html"
   },
   "options_ui": {
